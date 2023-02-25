@@ -1,0 +1,19 @@
+<html>
+  <head>
+    <title>Website with parameter</title>
+  </head>
+  <body>
+    <script>
+      // Extract the value of the "param" parameter from the URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const paramValue = urlParams.get('param');
+      
+      // Use the parameter value in your website
+      if (paramValue) {
+        document.write(`The value of the "param" parameter is: ${paramValue}`);
+      } else {
+        document.write(`The "param" parameter is not set in the URL.`);
+      }
+    </script>
+  </body>
+</html>
