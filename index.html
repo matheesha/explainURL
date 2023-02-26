@@ -79,6 +79,7 @@
       temperature: 0.7
     })
   });
+  console.log(response);
   const data = await response.json();
   return data.choices[0].text.trim();
 }
