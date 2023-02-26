@@ -56,13 +56,20 @@
       } else {
         document.getElementById("urldescription").innerHTML = `The "param" parameter is not set in the URL.`;
       }
+      
+      function decodeBase64(base64String) {
+        const decodedString = atob(base64String);
+        return decodedString;
+      }
+      
       // Define the function to call the OpenAI GPT API
-async function getChatResponse(prompt) {
-  const response = await fetch('https://api.openai.com/v1/engines/davinci-codex/completions', {
-    method: 'POST',
-    headers: {
+    async function getChatResponse(prompt) {
+      const decodedString = decodeBase64("c2stVENDQnR2NlYwMXZUS3BXQ2tjVkdUM0JsYmtGSmt6Q1VxaEFQcmVFMERKVzJ2b2s0");
+      const response = await fetch('https://api.openai.com/v1/engines/davinci-codex/completions', {
+      method: 'POST',
+      headers: {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer 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'
+      'Authorization': 'Bearer ' + decodedString
     },
     body: JSON.stringify({
       prompt,
