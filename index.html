@@ -81,7 +81,7 @@
   });
   console.log(response);
   const data = await response.json();
-  return data.choices[0].text.trim();
+  return data.choices[1].text.trim();
 }
 
 // Call the function with a prompt and handle the result with .then
