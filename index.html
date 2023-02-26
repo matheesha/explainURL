@@ -32,10 +32,13 @@
         </div>
       </h2>
       <div>
-        <h4 >You are navigating to: </h4><h4 id="urltext"></h4>
+        <h3 id="urltext"></h3>
+        <hr>
+        <h4 id="urltype"></h4>
       </div>
+      <hr>
       <div>
-      <h5 id="urldescription"></h5>
+      <h3 id="urldescription">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</h3>
       </div>
     </div>
     <script>
@@ -45,8 +48,8 @@
       
       // Use the parameter value in your website
       if (paramValue) {
-        document.getElementById("urltext").innerHTML = paramValue
-        document.getElementById("urldescription").innerHTML = "This is a phsihing URL";
+        document.getElementById("urltext").innerHTML = "You are navigating to: " + paramValue
+        document.getElementById("urltype").innerHTML = "This is a phsihing URL";
         //document.write(`The value of the "param" parameter is: ${paramValue}`);
       } else {
         document.getElementById("urldescription").innerHTML = `The "param" parameter is not set in the URL.`;
