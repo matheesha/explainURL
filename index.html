@@ -23,21 +23,7 @@
   </style>
   </head>
   <body>
-    <script>
-      // Extract the value of the "param" parameter from the URL
-      const urlParams = new URLSearchParams(window.location.search);
-      const paramValue = urlParams.get('param');
-      
-      // Use the parameter value in your website
-      if (paramValue) {
-        document.getElementById("urltext").innerHTML = paramValue
-        document.getElementById("urldescription").innerHTML = "This is a phsihing URL";
-        //document.write(`The value of the "param" parameter is: ${paramValue}`);
-      } else {
-        document.getElementById("urldescription").innerHTML = `The "param" parameter is not set in the URL.`;
-      }
-    </script>
-      <div class="ui middle aligned center aligned grid">
+   <div class="ui middle aligned center aligned grid">
     <div class="ten wide column" style="align-self: normal !important;">
       <h2 class="ui teal image header">
         <img src="search2_files/logo.png" class="image">
@@ -51,6 +37,20 @@
       <div>
       <h5 id="urldescription"></h5>
       </div>
-  </div>
+    </div>
+    <script>
+      // Extract the value of the "param" parameter from the URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const paramValue = urlParams.get('param');
+      
+      // Use the parameter value in your website
+      if (paramValue) {
+        document.getElementById("urltext").innerHTML = paramValue
+        document.getElementById("urldescription").innerHTML = "This is a phsihing URL";
+        //document.write(`The value of the "param" parameter is: ${paramValue}`);
+      } else {
+        document.getElementById("urldescription").innerHTML = `The "param" parameter is not set in the URL.`;
+      }
+   </script>
   </body>
 </html>
