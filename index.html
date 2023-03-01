@@ -53,10 +53,25 @@
         document.getElementById("urltext").innerHTML = "You are navigating to: " + paramValue
         document.getElementById("urltype").innerHTML = "This is a phsihing URL";
         //document.write(`The value of the "param" parameter is: ${paramValue}`);
-      } else {
+      } 
+	var apiUrl = "https://6i1ylmf9fzy-496ff2e9c6d22116-5000-colab.googleusercontent.com/predict?url="+url
+	// Send the API request
+	var requestOptions = {
+		method: 'GET',
+		redirect: 'follow'
+	};
+
+	fetch(apiUrl, requestOptions)
+	.then(response => response.text())
+	.then(result => {
+		document.getElementById("urldescription").innerHTML = result;
+		})
+	.catch(error => {
+		document.getElementById("urldescription").innerHTML = "error: "+ error
+		});
+      else {
         document.getElementById("urldescription").innerHTML = `The "param" parameter is not set in the URL.`;
       }
-      
       function decodeBase64(base64String) {
         const decodedString = atob(base64String);
         return decodedString;
@@ -84,22 +99,6 @@
   console.log(data.choices);
   return data.choices[0].text.trim();
 }
-
-var apiUrl = "https://6i1ylmf9fzy-496ff2e9c6d22116-5000-colab.googleusercontent.com/predict?url="+url
-	// Send the API request
-	var requestOptions = {
-		method: 'GET',
-		redirect: 'follow'
-	};
-
-	fetch(apiUrl, requestOptions)
-		.then(response => response.text())
-		.then(result => {
-			document.getElementById("urldescription").innerHTML = result;
-			})
-		.catch(error => {
-			document.getElementById("urldescription").innerHTML = "error: "+ error
-			});
 
 // Call the function with a prompt and handle the result with .then
 getChatResponse('Can you explain why https://www.go0gle.com is a phishing URL')
