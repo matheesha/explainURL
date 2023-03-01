@@ -53,7 +53,7 @@
         document.getElementById("urltext").innerHTML = "You are navigating to: " + paramValue
         document.getElementById("urltype").innerHTML = "This is a phsihing URL";
         //document.write(`The value of the "param" parameter is: ${paramValue}`);
-      } 
+      
 	var apiUrl = "https://6i1ylmf9fzy-496ff2e9c6d22116-5000-colab.googleusercontent.com/predict?url="+url
 	// Send the API request
 	var requestOptions = {
@@ -69,6 +69,7 @@
 	.catch(error => {
 		document.getElementById("urldescription").innerHTML = "error: "+ error
 		});
+      }
       else {
         document.getElementById("urldescription").innerHTML = `The "param" parameter is not set in the URL.`;
       }
