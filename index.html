@@ -55,8 +55,10 @@
       }
       const decodedString = decodeBase64("c2stQ3lJYnljc1BBYjluQ2dOYjh4T2VUM0JsYmtGSmR3WkxyRVptOTVKaDI3ZDBnNHdW");
 
-      function getExplanation(result) {
-      }
+      function splitOnFirst (str, sep) {
+  	const index = str.indexOf(sep);
+  	return index < 0 ? [str] : [str.slice(0, index), str.slice(index + sep.length)];
+	}
 	  
       // Use the parameter value in your website
       if (paramValue) {
@@ -88,7 +90,7 @@
 		fetch("https://api.openai.com/v1/chat/completions", requestOptions)
 		.then(response => response.json())
 		.then(result => {
-			document.getElementById("urldescription").innerHTML = result.choices[0].text.trim()
+			document.getElementById("urldescription").innerHTML = splitOnFirst(result.choices[0].message.content)
 			})
 		.catch(error => {
 			document.getElementById("urldescription").innerHTML = error
