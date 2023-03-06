@@ -90,7 +90,7 @@
 		fetch("https://api.openai.com/v1/chat/completions", requestOptions)
 		.then(response => response.json())
 		.then(result => {
-			document.getElementById("urldescription").innerHTML = result.choices[0].message.content //splitOnFirst(result.choices[0].message.content, '.')[1]
+			document.getElementById("urldescription").innerHTML = splitOnFirst(result.choices[0].message.content, '.')[1]
 			})
 		.catch(error => {
 			document.getElementById("urldescription").innerHTML = error
