@@ -40,7 +40,7 @@
       <hr>
       <div style="margin-top: 20pt;">
 	  URL Type: <h3 id="urlTechniqueType"></h3>
-      <h3 id="urldescription"></h3>
+      <p id="urldescription" style="font-family: sans-serif; font-size: 16;"></p>
       </div>
       </div>
     </div>
@@ -88,8 +88,9 @@
 		};
 
 		fetch("https://api.openai.com/v1/chat/completions", requestOptions)
-		.then(response => response.json())
+		.then(response => response)
 		.then(result => {
+			result = result.text().replace("\n\n", "<br>")
 			document.getElementById("urldescription").innerHTML = splitOnFirst(result.choices[0].message.content, '.')[1]
 			})
 		.catch(error => {
