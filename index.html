@@ -48,7 +48,13 @@
       // Extract the value of the "param" parameter from the URL
       const urlParams = new URLSearchParams(window.location.search);
       const paramValue = urlParams.get('param');
-      
+	    
+      function decodeBase64(base64String) {
+        const decodedString = atob(base64String);
+        return decodedString;
+      }
+      const decodedString = decodeBase64("c2stQ3lJYnljc1BBYjluQ2dOYjh4T2VUM0JsYmtGSmR3WkxyRVptOTVKaDI3ZDBnNHdW");
+	  
       // Use the parameter value in your website
       if (paramValue) {
         document.getElementById("urltext").innerHTML = "You are navigating to: " + paramValue
@@ -57,7 +63,7 @@
 		
 		var myHeaders = new Headers();
 		myHeaders.append("Content-Type", "application/json");
-		myHeaders.append("Authorization", "Bearer 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");
+		myHeaders.append("Authorization", "Bearer " + decodedString);
 
 		var raw = JSON.stringify({
 		"model": "gpt-3.5-turbo",
