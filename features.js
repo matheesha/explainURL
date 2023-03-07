@@ -1,9 +1,13 @@
 var result = {};
 //---------------------- 1.  IP Address  ----------------------
 
-var url = window.location.href;
-// alert(url);
-var urlDomain = window.location.hostname;
+const urlParams = new URLSearchParams(window.location.search);
+const url = urlParams.get('param');
+
+//var url = window.location.href;
+alert(url);
+var urlDomain = url.split("://")[1].split("/")[0]
+alert(urlDomain);
 
 //url="0x58.0xCC.0xCA.0x62"
 
@@ -300,3 +304,5 @@ if(iframes.length == 0) {
 } else {
     result["Random words in Domain"] = "1";
 }
+
+console.log(result)
