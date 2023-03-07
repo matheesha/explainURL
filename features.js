@@ -304,5 +304,3 @@ if(iframes.length == 0) {
 } else {
     result["Random words in Domain"] = "1";
 }
-
-console.log(result)
