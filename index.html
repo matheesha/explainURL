@@ -91,7 +91,7 @@
 		.then(response => response.json())
 		.then(result => {
 			result = splitOnFirst(result.choices[0].message.content, '.')[1]
-			result = result.choices[0].message.content.replaceAll("\n\n", "<br>")
+			result = result.replaceAll("\n\n", "<br>")
 			document.getElementById("urldescription").innerHTML = result
 			})
 		.catch(error => {
