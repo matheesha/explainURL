@@ -5,9 +5,9 @@ const urlParams = new URLSearchParams(window.location.search);
 const url = urlParams.get('param');
 
 //var url = window.location.href;
-alert(url);
+//alert(url);
 var urlDomain = url.split("://")[1].split("/")[0]
-alert(urlDomain);
+//alert(urlDomain);
 
 //url="0x58.0xCC.0xCA.0x62"
 
