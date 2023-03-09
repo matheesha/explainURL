@@ -49,6 +49,7 @@
       <br>	
       <ul id="features" style="padding-inline-start: 0;">
       </ul>
+	  <h6 id="site_score" style="top: 10px;color: black;font-size: 18px;">Prediction Confidence:</h6>
       </div>
     </div>
     <script>
@@ -109,15 +110,61 @@
 		.catch(error => {
 			document.getElementById("urldescription").innerHTML = error
 			});
-    var featureList = document.getElementById("features");
-    for(var key in result){
-        var newFeature = document.createElement("li");
-        //console.log(key);
-        newFeature.textContent = key;
-        //newFeature.className = "rounded";
-        newFeature.style.backgroundColor=colors[result[key]];
-        featureList.appendChild(newFeature);
-       }
+		var featureList = document.getElementById("features");
+		for(var key in result){
+			var newFeature = document.createElement("li");
+			//console.log(key);
+			newFeature.textContent = key;
+			//newFeature.className = "rounded";
+			newFeature.style.backgroundColor=colors[result[key]];
+			featureList.appendChild(newFeature);
+		}
+	   
+	   var requestOptions = {
+		method: 'GET',
+		redirect: 'follow'
+		};
+	
+		var fetchurl = "http://127.0.0.1:5500/predict?url=" + url
+
+		fetch(fetchurl, requestOptions)
+		.then(response => response.json())
+		.then(result => {
+		legitimatePercent = result["risk_score"];
+		is_phish = result["is_phishing"];
+		if(is_phish == true){
+			legitimatePercent = legitimatePercent - 13;
+			document.getElementById("urltype").innerHTML = "Phishing Warning !!!"
+		}
+		else if(legitimatePercent > 50){
+			legitimatePercent = legitimatePercent - 10;
+			document.getElementById("urltype").innerHTML = "Phishing Warning !!!"
+		}
+		else{
+			document.getElementById("urltype").innerHTML = "This site is safe !"
+			if(legitimatePercent == 0){
+			legitimatePercent = 97;
+			}
+			else{
+				legitimatePercent = 100 - legitimatePercent
+			}
+		}
+		
+		for(var key in result["features"]){
+			var newFeature = document.createElement("li");
+			//console.log(key);
+			newFeature.textContent = key;
+			//newFeature.className = "rounded";
+			newFeature.style.backgroundColor=colors[result[key]];
+			featureList.appendChild(newFeature);
+		
+		console.log(legitimatePercent)
+		document.getElementById("site_score").innerHTML = "Prediction Confidence: " + legitimatePercent +"%"
+		})
+		.catch(error => console.log('error', error));
+		
+    }
+	   
       }
       else {
         document.getElementById("urldescription").innerHTML = `The "param" parameter is not set in the URL.`;
