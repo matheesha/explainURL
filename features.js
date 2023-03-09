@@ -22,8 +22,6 @@ if(ip.test(urlDomain)||patt.test(urlDomain)||patt2.test(urlDomain)){
     result["IP Address in URL Domain"]="-1";
 }
 
-//alert(result);
-
 //---------------------- 2.  URL Length  ----------------------
 
 
@@ -41,7 +39,7 @@ if(url.length<54){
 //---------------------- 3.  Tiny URL  ----------------------
 
 var onlyDomain = urlDomain.replace('www.','');
-var path = url.split("://")[1].split("/")[1]
+var path = url.split("://")[1].split("/")[1];
 
 if(onlyDomain.length<7){
     result["Tiny URL"]="1";
@@ -80,11 +78,19 @@ if(patt.test(urlDomain)){
 
 //patt=".";
 
-if((onlyDomain.match(RegExp('\\.','g'))||[]).length==1){ 
+console.log(onlyDomain) ;
+//console.log(onlyDomain.match(RegExp('\\.','g'))||[]).length);
+
+var urlDomaincount = onlyDomain.split(".").length
+
+if(urlDomaincount <= 1){ 
+	alert("-1");
     result["Suspicious No. of Sub Domains"]="-1";
-}else if((onlyDomain.match(RegExp('\\.','g'))||[]).length==3){ 
+}else if(urlDomaincount==4){ 
+	//alert("0");
     result["Suspicious No. of Sub Domains"]="0";    
 }else{
+	//alert("1");
     result["Suspicious No. of Sub Domains"]="1";
 }
 
@@ -180,34 +186,37 @@ if(outRequest<22){
     result["Request URL"]="1";
 }
 
-//---------------------- 14.  URL of Anchor  ----------------------
-var aTags = document.getElementsByTagName("a");
+// //---------------------- 14.  Scripto Continua  ----------------------
+// // let words = tokenizer.tokenize(urlDomain);
+// // let scriptioContinua = 0;
+// // let previousWord = "";
+// // for (let i = 0; i < words.length; i++) {
+// //     let word = words[i];
+// //     if (previousWord !== "" && previousWord[previousWord.length - 1] !== "-" && word[0] !== "-") {
+// //         scriptioContinua++;
+// //     }
+// //     previousWord = word;
+// // }
 
-phishCount=0;
-legitCount=0;
-var allhrefs="";
+// let scriptioContinua = 0;
+// for (let i = 0; i < urlDomain.length - 1; i++) {
+//     if (urlDomain.charCodeAt(i) === urlDomain.charCodeAt(i + 1) - 1) {
+//         scriptioContinua++;
+//     }
+// }
+// if (scriptioContinua > 10) {
+//     result["Suspicious continuous words in domain"] = "1";
+// } else {
+//     result["Suspicious continuous words in domain"] = "-1";
+// }
 
-for(var i = 0; i < aTags.length; i++){
-    var hrefs = aTags[i].getAttribute("href");
-    if(!hrefs) continue;
-    allhrefs+=hrefs+"       ";
-    if(patt.test(hrefs)){
-        legitCount++;
-    }else if(hrefs.charAt(0)=='#'||(hrefs.charAt(0)=='/'&&hrefs.charAt(1)!='/')){
-        legitCount++;
-    }else{
-        phishCount++;
-    }
-}
-totalCount=phishCount+legitCount;
-outRequest=(phishCount/totalCount)*100;
+//---------------------- 14.  Use cloud file share  ----------------------
 
-if(outRequest<31){
-    result["Suspicious continous words in domain"]="-1";
-}else if(outRequest>=31&&outRequest<=67){
-    result["Suspicious continous words in domain"]="0";
-}else{
-    result["Suspicious continous words in domain"]="1";
+const known_fileshare = ['box', 'citrix', 'dropbox', 'google', 'icloud', 'mediafire', 'microsoft', 'onedrive', 'opentexthightail', 'wire', 'efilecabinet', 'onehub', 'efilecabinet', 'masv', 'wetransfer', 'filecloud', 'pcloud', 'amazon', 'mega', 'degoo', 'sync', 'jumpshare'];
+if (known_fileshare.includes(urlDomain.toLowerCase())) {
+    result["Use cloud file share"] = "1";
+} else {
+    result["Use cloud file share"] = "-1";
 }
 
 //alert(allhrefs);
@@ -280,27 +289,44 @@ for(var i = 0; i < forms.length; i++) {
 }
 result["SFH"] = res;
 
-//---------------------- 17.Submitting to mail ----------------------
-
-var forms = document.getElementsByTagName("form");
-var res = "-1";
-
-for(var i = 0; i < forms.length; i++) {
-    var action = forms[i].getAttribute("action");
-    if(!action) continue;
-    if(action.startsWith("mailto")) {
-        res = "1";
-        break;
-    }
+//---------------------- 16.Email in URL ----------------------
+const emailRegex = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/g;
+const emailMatches = url.match(emailRegex);
+if (emailMatches != null && emailMatches.length > 0) {
+    result["Email in URL"] = "1";
+} else { 
+    result["Email in URL"] = "-1";
 }
-result["Email in URL"] = res;
 
-//---------------------- 23.Using iFrame ----------------------
+// //---------------------- 17.Submitting to mail ----------------------
 
-var iframes = document.getElementsByTagName("iframe");
+// var forms = document.getElementsByTagName("form");
+// var res = "-1";
 
-if(iframes.length == 0) {
-    result["Random words in Domain"] = "-1";
+// for(var i = 0; i < forms.length; i++) {
+//     var action = forms[i].getAttribute("action");
+//     if(!action) continue;
+//     if(action.startsWith("mailto")) {
+//         res = "1";
+//         break;
+//     }
+// }
+// result["Email in URL"] = res;
+
+//---------------------- 17. Use free hosting ----------------------
+const knownFree = ['firebaseapp', 'bluehost', 'hostinger', 'wix', 'wordpress', 'weebly', 'google', 'bravenet', '000webhost', 'infinityfree.net', 'awardspace.com', 'host4geeks', 'freehosting.com', '50webs.com', 'freehostia.com', '5gbfree.com', 'byet.host', 'freehostingeu', 'x10hosting', 'godaddy', 'squarespace'];
+if (knownFree.includes(urlDomain.toLowerCase())) {
+  result["Use free hosting"] = "1";
 } else {
-    result["Random words in Domain"] = "1";
+  result["Use free hosting"] = "-1";
 }
+
+// //---------------------- 23.Using iFrame ----------------------
+
+// var iframes = document.getElementsByTagName("iframe");
+
+// if(iframes.length == 0) {
+//     result["Random words in Domain"] = "-1";
+// } else {
+//     result["Random words in Domain"] = "1";
+// }
